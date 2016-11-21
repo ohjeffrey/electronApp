@@ -1,0 +1,32 @@
+{
+  "name": "electron_app",
+  "productName": "basic",
+  "version": "1.0.1",
+  "description": "The unofficial electron app for basic",
+  "private": true,
+  "main": "main.js",
+  "author": {
+    "name": "scalajay",
+    "email": "scalajayjay@gmail.com"
+  },
+  "license": "GNU General Public License",
+  "homepage": "https://github.com/scalajay/electron_app/",
+  "keywords": [
+    "electron",
+    "entertainment"
+  ],
+  "bugs": {
+    "url": "https://github.com/scalajay/electron_app/issues/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scalajay/electron_app.git"
+  },
+  "dependencies": {
+    "electron-config": "^0.2.1",
+    "electron-context-menu": "^0.6.0",
+    "electron-dl": "^1.5.0",
+    "electron-is-dev": "^0.1.2",
+    "node-notifier": "^4.6.1"
+  }
+}
