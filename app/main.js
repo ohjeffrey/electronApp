@@ -29,7 +29,7 @@
       y: lastWindowState.y,
       width: lastWindowState.width,
       height: lastWindowState.height,
-      titleBarStyle: 'hidden-inset', // Uncomment this to remove the mac titlebar.
+      //titleBarStyle: 'hidden-inset', // Uncomment this to remove the mac titlebar.
       center: true,
       movable: true,
       resizable: true,
