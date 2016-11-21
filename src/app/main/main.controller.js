@@ -1,5 +1,8 @@
+//import * as electron from 'electron';
+import * as os from 'os';
+
 export class MainController {
-  constructor ($timeout, $log, webDevTec, toastr) {
+  constructor($timeout, $log, webDevTec, toastr) {
     'ngInject';
 
     this.awesomeThings = [];
@@ -12,7 +15,8 @@ export class MainController {
   }
 
   activate($timeout, webDevTec) {
-    this.$log.debug('angular ', angular);
+    this.$log.debug('os ', os.platform());
+    // this.$log.debug('electron ', electron);
 
     this.getWebDevTec(webDevTec);
     $timeout(() => {

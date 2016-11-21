@@ -14,18 +14,21 @@ function webpackWrapper(watch, test, callback) {
   var webpackOptions = {
     watch: watch,
     module: {
-      preLoaders: [{ test: /\.js$/, exclude: /node_modules/, loader: 'eslint-loader'}],
-      loaders: [{ test: /\.js$/, exclude: /node_modules/, loaders: ['ng-annotate', 'babel-loader?presets[]=es2015']}]
+      preLoaders: [{test: /\.js$/, exclude: /node_modules/, loader: 'eslint-loader'}],
+      loaders: [{test: /\.js$/, exclude: /node_modules/, loaders: ['ng-annotate', 'babel-loader?presets[]=es2015']}]
     },
-    output: { filename: 'index.module.js' }
+    output: {filename: 'index.module.js'},
+    node: {
+      fs: 'empty'
+    }
   };
 
-  if(watch) {
+  if (watch) {
     webpackOptions.devtool = 'inline-source-map';
   }
 
-  var webpackChangeHandler = function(err, stats) {
-    if(err) {
+  var webpackChangeHandler = function (err, stats) {
+    if (err) {
       conf.errorHandler('Webpack')(err);
     }
     $.util.log(stats.toString({
@@ -35,13 +38,13 @@ function webpackWrapper(watch, test, callback) {
       version: false
     }));
     browserSync.reload();
-    if(watch) {
+    if (watch) {
       watch = false;
       callback();
     }
   };
 
-  var sources = [ path.join(conf.paths.src, '/app/index.module.js') ];
+  var sources = [path.join(conf.paths.src, '/app/index.module.js')];
   if (test) {
     sources.push(path.join(conf.paths.src, '/app/**/*.spec.js'));
   }
