@@ -19,4 +19,7 @@ gulp.task('dist', ['clean'], function () {
   build.stdout.on('data', (data) => {
     console.log(`${data}`);
   });
+  build.stderr.on('data', (data) => {
+    console.log(`${data}`);
+  });
 });
