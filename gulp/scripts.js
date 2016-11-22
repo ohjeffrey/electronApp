@@ -18,7 +18,7 @@ function webpackWrapper(watch, test, callback) {
       loaders: [{test: /\.js$/, exclude: /node_modules/, loaders: ['ng-annotate', 'babel-loader?presets[]=es2015']}]
     },
     output: {filename: 'index.module.js'},
-    // target: 'electron'
+    target: 'electron'
   };
 
   if (watch) {
