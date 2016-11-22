@@ -122,7 +122,7 @@
     notifier.notify({
       'title': 'Update available',
       'message': 'A new update is available',
-      'icon': 'resources/windows/icon.ico'
+      'icon': 'dist/assets/images/gulp.png'
     });
   });
 
@@ -130,14 +130,19 @@
     notifier.notify({
       'title': 'New version available',
       'message': `Version ${releaseName} is downloaded and will be automatically installed on Quit`,
-      'icon': 'resources/windows/icon.ico'
+      'icon': 'dist/assets/images/gulp.png'
     });
     autoUpdater.quitAndInstall();
     return true;
   });
 
-  autoUpdater.addListener("error", (error) => {
-    notifier.notify('error', error);
+  autoUpdater.addListener("error", () => {
+    // send error to browser ipcMain
+    notifier.notify({
+      'title': 'Error',
+      'message': 'Error encountered whiles getting update',
+      'icon': '/dist/assets/images/gulp.png'
+    });
   });
 
   autoUpdater.addListener("checking-for-update", (event) => {

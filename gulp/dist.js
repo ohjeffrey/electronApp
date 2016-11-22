@@ -14,7 +14,7 @@ gulp.task('start', ['build'], function () {
 });
 
 //sign and package app for distribution
-gulp.task('dist', ['clean'], function () {
+gulp.task('dist', ['build'], function () {
   var build = childProcess.spawn('node_modules/.bin/build', ['-wml']);
   build.stdout.on('data', (data) => {
     console.log(`${data}`);
