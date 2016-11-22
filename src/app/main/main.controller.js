@@ -10,14 +10,12 @@ export class MainController {
     this.creationDate = 1479701674992;
     this.toastr = toastr;
     this.$log = $log;
-
-    this.activate($timeout, webDevTec);
     this.platform = os.platform();
+    this.version = remote.app.getVersion();
+    this.activate($timeout, webDevTec);
   }
 
   activate($timeout, webDevTec) {
-    this.$log.debug('electron remote', remote);
-
     this.getWebDevTec(webDevTec);
     $timeout(() => {
       this.classAnimation = 'rubberBand';

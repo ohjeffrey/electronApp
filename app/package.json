@@ -1,7 +1,7 @@
 {
   "name": "electron_app",
   "productName": "basic",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Electron app testing auto updates",
   "private": true,
   "main": "main.js",

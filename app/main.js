@@ -4,14 +4,12 @@
   const os = require('os');
   const fs = require('fs');
   const path = require('path');
-  const electron = require('electron');
-  const app = electron.app;
-  const autoUpdater = electron.autoUpdater;
-  const title = app.getName();
+  const notifier = require('node-notifier');
+  const devMode = require('electron-is-dev');
+  const {app, shell, autoUpdater, globalShortcut, BrowserWindow, Menu} = require('electron');
   const version = app.getVersion();
   const platform = os.platform();
   const app_config = require('./lib/config.js');
-  const notifier = require('node-notifier');
 
   require('electron-dl')();
   require('electron-context-menu')();
@@ -19,12 +17,15 @@
   let mainWindow;
   let isQuitting = false;
 
-  //autoUpdater.setFeedURL(`https://localhost:3000/update/${platform}?version=${version}`);
+  if (!devMode) {
+    //enable auto updates when not running in dev mode(app is signed)
+    autoUpdater.setFeedURL(`https://localhost:3000/update/${platform}?version=${version}`);
+  }
 
   function createMainWindow() {
     const lastWindowState = app_config.get('lastWindowState');
-    const app_view = new electron.BrowserWindow({
-      title: title,
+    const app_view = new BrowserWindow({
+      title: app.getName(),
       x: lastWindowState.x,
       y: lastWindowState.y,
       width: lastWindowState.width,
@@ -61,7 +62,7 @@
 
     const app_page = mainWindow.webContents;
 
-    electron.Menu.setApplicationMenu(require('./lib/menu.js'));
+    Menu.setApplicationMenu(require('./lib/menu.js'));
 
     app_page.on('dom-ready', () => {
       mainWindow.show();
@@ -70,17 +71,17 @@
       // Open external links in browser
       app_page.on('new-window', (e, url) => {
         e.preventDefault();
-        electron.shell.openExternal(url);
+        shell.openExternal(url);
       });
 
       // Shortcut to reload the page.
-      electron.globalShortcut.register('CmdOrCtrl+R', (item, focusedWindow) => {
+      globalShortcut.register('CmdOrCtrl+R', (item, focusedWindow) => {
         if (focusedWindow) {
           mainWindow.webContents.reload();
         }
       });
       // Shortcut to go back a page.
-      electron.globalShortcut.register('Command+Left', (item, focusedWindow) => {
+      globalShortcut.register('Command+Left', (item, focusedWindow) => {
         if (focusedWindow && focusedWindow.webContents.canGoBack()) {
           focusedWindow.webContents.goBack();
           focusedWindow.webContents.reload();
@@ -116,7 +117,7 @@
     }
   });
 
-//Auto updates
+  //Auto updates
   autoUpdater.addListener("update-available", (event) => {
     notifier.notify({
       'title': 'Update available',
@@ -146,10 +147,4 @@
   autoUpdater.addListener("update-not-available", () => {
     notifier.notify("update-not-available");
   });
-
-
-  /**
-   app_page.insertCSS(fs.readFileSync(path.join(__dirname, 'app.css'), 'utf8'));
-   app_page.executeJavaScript(fs.readFileSync(path.join(__dirname, 'renderer.js'), 'utf8'));
-   */
 })();
