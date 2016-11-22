@@ -120,17 +120,17 @@
   //Auto updates
   autoUpdater.addListener("update-available", (event) => {
     notifier.notify({
-      'title': 'Update available',
+      'title': 'Updates',
       'message': 'A new update is available',
-      'icon': 'dist/assets/images/gulp.png'
+      'icon': '/dist/assets/images/gulp.png'
     });
   });
 
   autoUpdater.addListener("update-downloaded", (event, releaseNotes, releaseName, releaseDate, updateURL) => {
     notifier.notify({
-      'title': 'New version available',
+      'title': 'Updates',
       'message': `Version ${releaseName} is downloaded and will be automatically installed on Quit`,
-      'icon': 'dist/assets/images/gulp.png'
+      'icon': '/dist/assets/images/gulp.png'
     });
     autoUpdater.quitAndInstall();
     return true;
@@ -139,17 +139,26 @@
   autoUpdater.addListener("error", () => {
     // send error to browser ipcMain
     notifier.notify({
-      'title': 'Error',
+      'title': 'Updates',
       'message': 'Error encountered whiles getting update',
       'icon': '/dist/assets/images/gulp.png'
     });
   });
 
-  autoUpdater.addListener("checking-for-update", (event) => {
-    notifier.notify("checking-for-update");
+  autoUpdater.addListener("checking-for-update", () => {
+    notifier.notify({
+      'title': 'Updates',
+      'message': 'Checking for new update',
+      'icon': '/dist/assets/images/gulp.png'
+    });
   });
 
   autoUpdater.addListener("update-not-available", () => {
-    notifier.notify("update-not-available");
+    notifier.notify({
+      'title': 'Updates',
+      'message': 'No new update available',
+      'icon': '/dist/assets/images/gulp.png'
+    });
   });
+
 })();
