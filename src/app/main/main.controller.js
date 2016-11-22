@@ -1,4 +1,4 @@
-//import * as electron from 'electron';
+import {remote} from 'electron';
 import * as os from 'os';
 
 export class MainController {
@@ -12,11 +12,11 @@ export class MainController {
     this.$log = $log;
 
     this.activate($timeout, webDevTec);
+    this.platform = os.platform();
   }
 
   activate($timeout, webDevTec) {
-    this.$log.debug('os ', os.platform());
-    // this.$log.debug('electron ', electron);
+    this.$log.debug('electron remote', remote);
 
     this.getWebDevTec(webDevTec);
     $timeout(() => {

@@ -35,7 +35,7 @@
       resizable: true,
       autoHideMenuBar: true,
       webPreferences: {
-        nodeIntegration: false,
+        nodeIntegration: true,
         plugins: true
       }
     });
