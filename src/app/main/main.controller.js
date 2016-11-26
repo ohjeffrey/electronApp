@@ -1,4 +1,4 @@
-import {remote} from 'electron';
+import {remote, ipcRenderer} from 'electron';
 import * as os from 'os';
 
 export class MainController {
@@ -13,6 +13,10 @@ export class MainController {
     this.platform = os.platform();
     this.version = remote.app.getVersion();
     this.activate($timeout, webDevTec);
+  }
+
+  createWindow() {
+    ipcRenderer.send('dialog');
   }
 
   activate($timeout, webDevTec) {

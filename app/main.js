@@ -6,62 +6,36 @@
   const path = require('path');
   const notifier = require('node-notifier');
   const devMode = require('electron-is-dev');
-  const {app, shell, autoUpdater, globalShortcut, BrowserWindow, Menu} = require('electron');
+  const {app, autoUpdater, dialog, globalShortcut, ipcMain, shell, BrowserWindow, Menu} = require('electron');
   const version = app.getVersion();
   const platform = os.platform();
   const app_config = require('./lib/config.js');
-
+  const appIcon = '/dist/assets/images/gulp.png';
   require('electron-dl')();
   require('electron-context-menu')();
 
   let mainWindow;
   let isQuitting = false;
 
+  ipcMain.on('dialog', function () {
+    dialog.showMessageBox({
+      buttons: ['ok', 'cancel'],
+      message: 'Do you want to exit?'
+    }, function (index) {
+      if (index === 0) {
+        app.quit();
+      }
+    });
+  });
+
   if (!devMode) {
-    //enable auto updates when not running in dev mode(app is signed)
+    //auto updates work when app is signed
     autoUpdater.setFeedURL(`https://localhost:3000/update/${platform}?version=${version}`);
   }
 
-  function createMainWindow() {
-    const lastWindowState = app_config.get('lastWindowState');
-    const app_view = new BrowserWindow({
-      title: app.getName(),
-      x: lastWindowState.x,
-      y: lastWindowState.y,
-      width: lastWindowState.width,
-      height: lastWindowState.height,
-      //titleBarStyle: 'hidden-inset', // Uncomment this to remove the mac titlebar.
-      center: true,
-      movable: true,
-      resizable: true,
-      autoHideMenuBar: true,
-      webPreferences: {
-        nodeIntegration: true,
-        plugins: true
-      }
-    });
-
-    app_view.loadURL('file://' + __dirname + '/dist/index.html');
-
-    app_view.on('close', e => {
-      if (!isQuitting) {
-        e.preventDefault();
-        if (platform === 'darwin') {
-          app.hide();
-        } else {
-          app.quit();
-        }
-      }
-    });
-    return app_view;
-  }
-
-
   app.on('ready', () => {
     mainWindow = createMainWindow();
-
     const app_page = mainWindow.webContents;
-
     Menu.setApplicationMenu(require('./lib/menu.js'));
 
     app_page.on('dom-ready', () => {
@@ -95,13 +69,10 @@
         }
       });
     });
-
   });
 
   app.on('window-all-closed', () => {
-    if (platform !== 'darwin') {
-      app.quit();
-    }
+    app.quit();
   });
 
   app.on('activate', () => {
@@ -109,7 +80,7 @@
   });
 
   app.on('before-quit', () => {
-    isQuitting = true;
+    globalShortcut.unregisterAll();
 
     // Saves the current window position and window size to the config file.
     if (!mainWindow.isFullScreen()) {
@@ -118,11 +89,11 @@
   });
 
   //Auto updates
-  autoUpdater.addListener("update-available", (event) => {
+  autoUpdater.addListener("update-available", () => {
     notifier.notify({
       'title': 'Updates',
       'message': 'A new update is available',
-      'icon': '/dist/assets/images/gulp.png'
+      'icon': appIcon
     });
   });
 
@@ -130,18 +101,17 @@
     notifier.notify({
       'title': 'Updates',
       'message': `Version ${releaseName} is downloaded and will be automatically installed on Quit`,
-      'icon': '/dist/assets/images/gulp.png'
+      'icon': appIcon
     });
     autoUpdater.quitAndInstall();
     return true;
   });
 
   autoUpdater.addListener("error", () => {
-    // send error to browser ipcMain
     notifier.notify({
       'title': 'Updates',
       'message': 'Error encountered whiles getting update',
-      'icon': '/dist/assets/images/gulp.png'
+      'icon': appIcon
     });
   });
 
@@ -149,7 +119,7 @@
     notifier.notify({
       'title': 'Updates',
       'message': 'Checking for new update',
-      'icon': '/dist/assets/images/gulp.png'
+      'icon': appIcon
     });
   });
 
@@ -157,8 +127,46 @@
     notifier.notify({
       'title': 'Updates',
       'message': 'No new update available',
-      'icon': '/dist/assets/images/gulp.png'
+      'icon': appIcon
     });
   });
+
+  function createMainWindow() {
+    const lastWindowState = app_config.get('lastWindowState');
+    const browser = new BrowserWindow({
+      title: app.getName(),
+      x: lastWindowState.x,
+      y: lastWindowState.y,
+      width: lastWindowState.width,
+      height: lastWindowState.height,
+      autoHideMenuBar: true,
+      center: true,
+      movable: true,
+      resizable: true,
+      closable: true,
+      webPreferences: {
+        nodeIntegration: true,
+        plugins: true
+      }
+    });
+
+    browser.loadURL('file://' + __dirname + '/dist/index.html');
+
+    browser.on('close', e => {
+      if (mainWindow.isFullScreen()) {
+        isQuitting = true;
+      }
+
+      if (!isQuitting) {
+        e.preventDefault();
+        if (platform === 'darwin') {
+          app.hide();
+        } else {
+          app.quit();
+        }
+      }
+    });
+    return browser;
+  }
 
 })();
