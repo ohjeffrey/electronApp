@@ -71,12 +71,12 @@
     });
   });
 
-  app.on('window-all-closed', () => {
-    app.quit();
-  });
-
   app.on('activate', () => {
     mainWindow.show();
+  });
+
+  app.on('window-all-closed', () => {
+    app.quit();
   });
 
   app.on('before-quit', () => {
@@ -90,6 +90,22 @@
   });
 
   //Auto updates
+  autoUpdater.addListener("checking-for-update", () => {
+    notifier.notify({
+      'title': 'Updates',
+      'message': 'Checking for new update',
+      'icon': appIcon
+    });
+  });
+
+  autoUpdater.addListener("update-not-available", () => {
+    notifier.notify({
+      'title': 'Updates',
+      'message': 'No new update available',
+      'icon': appIcon
+    });
+  });
+
   autoUpdater.addListener("update-available", () => {
     notifier.notify({
       'title': 'Updates',
@@ -112,22 +128,6 @@
     notifier.notify({
       'title': 'Updates',
       'message': 'Error encountered whiles getting update',
-      'icon': appIcon
-    });
-  });
-
-  autoUpdater.addListener("checking-for-update", () => {
-    notifier.notify({
-      'title': 'Updates',
-      'message': 'Checking for new update',
-      'icon': appIcon
-    });
-  });
-
-  autoUpdater.addListener("update-not-available", () => {
-    notifier.notify({
-      'title': 'Updates',
-      'message': 'No new update available',
       'icon': appIcon
     });
   });
