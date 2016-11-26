@@ -19,7 +19,7 @@
 
   ipcMain.on('dialog', function () {
     dialog.showMessageBox({
-      buttons: ['ok', 'cancel'],
+      buttons: ['Ok', 'Cancel'],
       message: 'Do you want to exit?'
     }, function (index) {
       if (index === 0) {
@@ -80,6 +80,7 @@
   });
 
   app.on('before-quit', () => {
+    isQuitting = true;
     globalShortcut.unregisterAll();
 
     // Saves the current window position and window size to the config file.
