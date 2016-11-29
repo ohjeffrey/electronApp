@@ -13,11 +13,18 @@
   "engines": {
     "node": ">=0.10.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/scalajay/electronApp.git"
+  },
   "build": {
     "appId": "com.test.my.app",
     "category": "entertainment",
     "win": {
       "icon": "build/windows/icon.ico",
+      "publish": [
+        "github"
+      ],
       "target": [
         "zip"
       ]
@@ -27,14 +34,23 @@
       "installerHeaderIcon": "build/windows/setup-icon.ico"
     },
     "mac": {
-      "icon": "build/osx/icon.icns"
+      "icon": "build/osx/icon.icns",
+      "publish": [
+        "github"
+      ]
     },
     "dmg": {
       "icon": "build/osx/dmg-icon.icns",
-      "background": "build/osx/dmg-background.png"
+      "background": "build/osx/dmg-background.png",
+      "publish": [
+        "github"
+      ]
     },
     "linux": {
       "icon": "build/windows/icon.ico",
+      "publish": [
+        "github"
+      ],
       "target": [
         "deb",
         "tar.gz"

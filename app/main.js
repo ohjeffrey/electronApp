@@ -17,6 +17,7 @@
   let mainWindow;
   let isQuitting = false;
 
+  //testing ipc communications
   ipcMain.on('dialog', function (event) {
     const saveOptions = {
       title: 'Save an Image',
@@ -57,11 +58,9 @@
     mainWindow = createMainWindow();
     const app_page = mainWindow.webContents;
     Menu.setApplicationMenu(require('./lib/menu.js'));
+    autoUpdater.setFeedURL(`https://localhost:3000/update/${platform}?version=${version}`);
 
-    if (!devMode) {
-      //auto updates work when app is signed
-      autoUpdater.setFeedURL(`https://localhost:3000/update/${platform}?version=${version}`);
-    } else {
+    if (devMode) {
       mainWindow.openDevTools();
     }
 
