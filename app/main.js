@@ -6,37 +6,64 @@
   const path = require('path');
   const notifier = require('node-notifier');
   const devMode = require('electron-is-dev');
+  //const {download} = require('electron-dl');
   const {app, autoUpdater, dialog, globalShortcut, ipcMain, shell, BrowserWindow, Menu} = require('electron');
   const version = app.getVersion();
   const platform = os.platform();
   const app_config = require('./lib/config.js');
   const appIcon = '/dist/assets/images/gulp.png';
-  require('electron-dl')();
   require('electron-context-menu')();
 
   let mainWindow;
   let isQuitting = false;
 
-  ipcMain.on('dialog', function () {
-    dialog.showMessageBox({
-      buttons: ['Ok', 'Cancel'],
-      message: 'Do you want to exit?'
-    }, function (index) {
-      if (index === 0) {
+  ipcMain.on('dialog', function (event) {
+    const saveOptions = {
+      title: 'Save an Image',
+      filters: [
+        {name: 'Images', extensions: ['jpg', 'png', 'gif']}
+      ]
+    };
+
+    const infoOptions = {
+      type: 'info',
+      title: 'Information',
+      message: "Are you sure you want to exit?",
+      buttons: ['Yes', 'No']
+    };
+
+    dialog.showMessageBox(infoOptions, function (buttonIndex) {
+      if (buttonIndex === 0) {
         app.quit();
       }
     });
-  });
 
-  if (!devMode) {
-    //auto updates work when app is signed
-    autoUpdater.setFeedURL(`https://localhost:3000/update/${platform}?version=${version}`);
-  }
+    // dialog.showErrorBox('An Error Message', 'Demonstrating an error message.')
+
+    // dialog.showSaveDialog(saveOptions, function (filename) {
+    //   event.sender.send('saved-file', filename)
+    // });
+
+    // dialog.showOpenDialog(mainWindow, {
+    //   properties: ['openFile', 'openDirectory'],
+    // }, function (files) {
+    //   if (files) {
+    //     event.sender.send('selected-directory', files)
+    //   }
+    // });
+  });
 
   app.on('ready', () => {
     mainWindow = createMainWindow();
     const app_page = mainWindow.webContents;
     Menu.setApplicationMenu(require('./lib/menu.js'));
+
+    if (!devMode) {
+      //auto updates work when app is signed
+      autoUpdater.setFeedURL(`https://localhost:3000/update/${platform}?version=${version}`);
+    } else {
+      mainWindow.openDevTools();
+    }
 
     app_page.on('dom-ready', () => {
       mainWindow.show();
@@ -69,6 +96,7 @@
         }
       });
     });
+
   });
 
   app.on('activate', () => {
