@@ -1,6 +1,6 @@
 {
-  "name": "electron_app",
-  "productName": "Basic",
+  "name": "electronApp",
+  "productName": "electronApp",
   "version": "1.0.0",
   "description": "Electron app testing auto updates",
   "private": true,
@@ -10,17 +10,17 @@
     "email": "scalajayjay@gmail.com"
   },
   "license": "GNU General Public License",
-  "homepage": "https://github.com/scalajay/electron_app/",
+  "homepage": "https://github.com/scalajay/electronApp/",
   "keywords": [
     "electron",
     "entertainment"
   ],
   "bugs": {
-    "url": "https://github.com/scalajay/electron_app/issues/"
+    "url": "https://github.com/scalajay/electronApp/issues/"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/scalajay/electron_app.git"
+    "url": "https://github.com/scalajay/electronApp.git"
   },
   "dependencies": {
     "electron-config": "^0.2.1",

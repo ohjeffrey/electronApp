@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "electron_angular",
+  "name": "electron_angular_app",
   "version": "1.0.0",
   "scripts": {
     "postinstall": "install-app-deps",
