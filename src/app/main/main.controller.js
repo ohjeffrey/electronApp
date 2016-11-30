@@ -13,10 +13,6 @@ export class MainController {
     this.platform = os.platform();
     this.version = remote.app.getVersion();
     this.activate($timeout, webDevTec);
-
-    ipcRenderer.on('selected-directory', function (event, data) {
-      this.$log.debug(`you selected ${data}`);
-    })
   }
 
   createWindow() {

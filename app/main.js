@@ -18,14 +18,7 @@
   let isQuitting = false;
 
   //testing ipc communications
-  ipcMain.on('dialog', function (event) {
-    const saveOptions = {
-      title: 'Save an Image',
-      filters: [
-        {name: 'Images', extensions: ['jpg', 'png', 'gif']}
-      ]
-    };
-
+  ipcMain.on('dialog', function () {
     const infoOptions = {
       type: 'info',
       title: 'Information',
@@ -38,27 +31,13 @@
         app.quit();
       }
     });
-
-    // dialog.showErrorBox('An Error Message', 'Demonstrating an error message.')
-
-    // dialog.showSaveDialog(saveOptions, function (filename) {
-    //   event.sender.send('saved-file', filename)
-    // });
-
-    // dialog.showOpenDialog(mainWindow, {
-    //   properties: ['openFile', 'openDirectory'],
-    // }, function (files) {
-    //   if (files) {
-    //     event.sender.send('selected-directory', files)
-    //   }
-    // });
   });
 
   app.on('ready', () => {
     mainWindow = createMainWindow();
     const app_page = mainWindow.webContents;
     Menu.setApplicationMenu(require('./lib/menu.js'));
-    autoUpdater.setFeedURL(`https://localhost:3000/update/${platform}?version=${version}`);
+    autoUpdater.setFeedURL(`http://localhost:3000/update/${platform}?version=${version}`);
 
     if (devMode) {
       mainWindow.openDevTools();
@@ -151,10 +130,10 @@
     return true;
   });
 
-  autoUpdater.addListener("error", () => {
+  autoUpdater.addListener("error", (error) => {
     notifier.notify({
-      'title': 'Updates',
-      'message': 'Error encountered whiles getting update',
+      'title': 'Updates Error',
+      'message': error.message,
       'icon': appIcon
     });
   });
