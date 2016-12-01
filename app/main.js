@@ -126,6 +126,7 @@
       'message': `Version ${releaseName} is downloaded and will be automatically installed on Quit`,
       'icon': appIcon
     });
+    isQuitting = true;
     autoUpdater.quitAndInstall();
     return true;
   });
