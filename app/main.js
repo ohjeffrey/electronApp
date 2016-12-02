@@ -96,22 +96,6 @@
   });
 
   //Auto updates
-  autoUpdater.addListener("checking-for-update", () => {
-    notifier.notify({
-      'title': 'Updates',
-      'message': 'Checking for new update',
-      'icon': appIcon
-    });
-  });
-
-  autoUpdater.addListener("update-not-available", () => {
-    notifier.notify({
-      'title': 'Updates',
-      'message': 'No new update available',
-      'icon': appIcon
-    });
-  });
-
   autoUpdater.addListener("update-available", () => {
     notifier.notify({
       'title': 'Updates',
@@ -132,11 +116,13 @@
   });
 
   autoUpdater.addListener("error", (error) => {
-    notifier.notify({
-      'title': 'Updates Error',
-      'message': error.message,
-      'icon': appIcon
-    });
+    if(!devMode) {
+      notifier.notify({
+        'title': 'Updates Error',
+        'message': error.message,
+        'icon': appIcon
+      });
+    }
   });
 
   function createMainWindow() {

@@ -1,0 +1,32 @@
+.timerPage {
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  .md-virtual-repeat-container {
+    height: 200px;
+    width: 50px;
+
+    .repeated-item {
+      height: 50px;
+      text-align: center;
+      padding-top: 40px;
+      line-height: 1em;
+      vertical-align: bottom;
+      //border: 1px solid red;
+    }
+  }
+
+  .md-button.md-fab {
+    width: 75px;
+    height: 75px;
+  }
+
+  .selected {
+    height: 24px;
+    width: 24px;
+    margin: 12px;
+    border: 1px solid cornflowerblue;
+    position: absolute;
+    top: 35px;
+  }
+}

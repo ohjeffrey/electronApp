@@ -1,0 +1,29 @@
+<div layout="column" flex layout-fill>
+    <md-toolbar>
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+            <md-button ng-click="vma.edit()">{{vma.getAction()}}</md-button>
+            <h2>{{vma.name}}</h2>
+            <md-button class="md-icon-button" ng-click="vma.add()">
+                <ng-md-icon icon="add" aria-label="add icon"></ng-md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-content>
+        <md-list>
+            <md-list-item class="md-3-line" ng-repeat="item in vma.messages">
+                <ng-md-icon icon="remove_circle_outline"
+                            style="fill:red"
+                            ng-click="vma.deleteClock(item)"
+                            ng-if="vma.isEditing"></ng-md-icon>
+                <div class="md-list-item-text">
+                    <h3 class="md-title">{{item.city}}</h3>
+                    <p>{{item.difference}}</p>
+                </div>
+                <h3 class="md-headline" ng-if="!vma.isEditing">{{item.time}}</h3>
+                <ng-md-icon icon="reorder" ng-if="vma.isEditing"></ng-md-icon>
+                <md-divider ng-if="!$last"></md-divider>
+            </md-list-item>
+        </md-list>
+    </md-content>
+    <footer-bar></footer-bar>
+</div>
