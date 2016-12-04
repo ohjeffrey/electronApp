@@ -130,8 +130,5 @@
     "protractor.conf.js",
     "README.md",
     ".DS_Store"
-  ],
-  "dependencies": {
-    "electron": "^1.4.5"
-  }
+  ]
 }

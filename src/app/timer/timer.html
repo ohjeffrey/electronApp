@@ -24,17 +24,17 @@
             </div>
             <div>
                 <ng-pluralize count="ctrl.currentMinute"
-                              when="{'0': '{}mins', '1': '{}min','other': '{}mins'}"></ng-pluralize>
+                              when="{'0': 'mins', '1': 'min','other': 'mins'}"></ng-pluralize>
             </div>
         </section>
 
         <!--count down-->
         <section flex="40" flex-offset="30" layout="row" layout-align="space-around center" ng-if="ctrl.isCountingDown">
-            <h3 class="md-display-3" ng-if="ctrl.currentHour">{{ctrl.currentHour < 10 ? '0' + ctrl.currentHour :ctrl.currentHour}}</h3>
+            <h3 class="md-display-3" ng-if="ctrl.currentHour">{{ctrl.currentHour}}</h3>
             <h3 class="md-display-3" ng-if="ctrl.currentHour">:</h3>
-            <h3 class="md-display-3">{{ctrl.currentMinute < 10 ? '0' + ctrl.currentMinute :ctrl.currentMinute}}</h3>
+            <h3 class="md-display-3">{{ctrl.currentMinute}}</h3>
             <h3 class="md-display-3">:</h3>
-            <h3 class="md-display-3">{{ctrl.currentSecond < 10 ? '0' + ctrl.currentSecond :ctrl.currentSecond}}</h3>
+            <h3 class="md-display-3">{{ctrl.currentSecond}}</h3>
         </section>
 
         <!--labels-->
