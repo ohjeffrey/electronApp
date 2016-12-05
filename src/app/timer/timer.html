@@ -1,66 +1,67 @@
-<div layout="column" flex layout-fill class="timerPage">
+<div flex layout="column" layout-fill layout-align="space-between" class="timerPage">
     <md-toolbar>
-        <div class="md-toolbar-tools" layout="row" layout-align="space-around center">
+        <div class="md-toolbar-tools" layout-align="space-around center">
             <h2>Timer</h2>
         </div>
     </md-toolbar>
-    <md-content class="md-padding">
-        <!--user selection -->
-        <section layout="row" layout-align="space-around center" ng-if="!ctrl.isCountingDown">
-            <div>
-                <md-virtual-repeat-container md-top-index="ctrl.currentHour">
-                    <div md-virtual-repeat="hour in ctrl.hours" class="repeated-item" flex>{{hour}}</div>
-                </md-virtual-repeat-container>
-                <div class="selected"></div>
-            </div>
+    <!--user selection -->
+    <section class="md-padding" layout="row" layout-align="space-around" ng-if="!ctrl.isCountingDown">
+        <div>
+            <md-virtual-repeat-container md-top-index="ctrl.currentHour">
+                <div md-virtual-repeat="hour in ctrl.hours" class="repeated-item" flex>{{hour}}</div>
+            </md-virtual-repeat-container>
+            <div class="selected"></div>
+        </div>
+        <div class="md-padding">
             <ng-pluralize count="ctrl.currentHour"
                           when="{'0': 'hours', '1': 'hour','other': 'hours'}"></ng-pluralize>
 
-            <div>
-                <md-virtual-repeat-container md-top-index="ctrl.currentMinute">
-                    <div md-virtual-repeat="minute in ctrl.minutes" class="repeated-item" flex>{{minute}}</div>
-                </md-virtual-repeat-container>
-                <div class="selected"></div>
-            </div>
-            <div>
-                <ng-pluralize count="ctrl.currentMinute"
-                              when="{'0': 'mins', '1': 'min','other': 'mins'}"></ng-pluralize>
-            </div>
-        </section>
+        </div>
+        <div>
+            <md-virtual-repeat-container md-top-index="ctrl.currentMinute">
+                <div md-virtual-repeat="minute in ctrl.minutes" class="repeated-item" flex>{{minute}}</div>
+            </md-virtual-repeat-container>
+            <div class="selected"></div>
+        </div>
+        <div class="md-padding">
+            <ng-pluralize count="ctrl.currentMinute"
+                          when="{'0': '{}mins', '1': '{}min','other': '{}mins'}"></ng-pluralize>
+        </div>
+    </section>
 
-        <!--count down-->
-        <section flex="40" flex-offset="30" layout="row" layout-align="space-around center" ng-if="ctrl.isCountingDown">
-            <h3 class="md-display-3" ng-if="ctrl.currentHour">{{ctrl.currentHour}}</h3>
-            <h3 class="md-display-3" ng-if="ctrl.currentHour">:</h3>
-            <h3 class="md-display-3">{{ctrl.currentMinute}}</h3>
-            <h3 class="md-display-3">:</h3>
-            <h3 class="md-display-3">{{ctrl.currentSecond}}</h3>
-        </section>
+    <!--count down-->
+    <section class="md-padding" layout="row" layout-align="space-around center"
+             ng-if="ctrl.isCountingDown">
+        <h3 class="md-display-3" ng-if="ctrl.currentHour">{{ctrl.currentHour}}</h3>
+        <h3 class="md-display-3" ng-if="ctrl.currentHour">:</h3>
+        <h3 class="md-display-3">{{ctrl.currentMinute}}</h3>
+        <h3 class="md-display-3">:</h3>
+        <h3 class="md-display-3">{{ctrl.currentSecond}}</h3>
+    </section>
 
-        <!--labels-->
-        <section class="md-padding">
-            <md-divider></md-divider>
-            <section layout="row" layout-align="space-between center">
-                <span class="md-subhead">When Timer Ends</span>
-                <md-select ng-model="ctrl.tone" placeholder="Select Tone" class="md-no-underline">
-                    <md-option ng-repeat="tone in ctrl.tones" ng-model="ctrl.tone">{{tone.name}}</md-option>
-                </md-select>
-            </section>
-            <md-divider></md-divider>
+    <!--labels-->
+    <section class="md-padding">
+        <md-divider></md-divider>
+        <section layout="row" layout-align="space-between center">
+            <span class="md-subhead">When Timer Ends</span>
+            <md-select ng-model="ctrl.tone" placeholder="Select Tone" class="md-no-underline">
+                <md-option ng-repeat="tone in ctrl.tones" ng-model="ctrl.tone">{{tone.name}}</md-option>
+            </md-select>
         </section>
+        <md-divider></md-divider>
+    </section>
 
-        <!--buttons-->
-        <section class="md-padding" layout="row" layout-align="space-around center">
-            <md-button class="md-fab md-warn" ng-click="ctrl.cancelTimer()">Cancel</md-button>
-            <md-button class="md-fab md-primary" ng-if="!ctrl.isCountingDown" ng-click="ctrl.startTimer()">Start
-            </md-button>
-            <md-button class="md-fab md-hue-3" ng-click="ctrl.pauseTimer()"
-                       ng-if="ctrl.isCountingDown && !ctrl.isTimerPaused">Pause
-            </md-button>
-            <md-button class="md-fab md-accent" ng-click="ctrl.resumeTimer()"
-                       ng-if="ctrl.isCountingDown && ctrl.isTimerPaused">Resume
-            </md-button>
-        </section>
-    </md-content>
+    <!--buttons-->
+    <section class="md-padding" layout="row" layout-align="space-around center">
+        <md-button class="md-fab md-warn" ng-click="ctrl.cancelTimer()" ng-disabled="!ctrl.isCountingDown">Cancel</md-button>
+        <md-button class="md-fab md-primary" ng-if="!ctrl.isCountingDown" ng-click="ctrl.startTimer()">Start
+        </md-button>
+        <md-button class="md-fab md-hue-3" ng-click="ctrl.pauseTimer()"
+                   ng-if="ctrl.isCountingDown && !ctrl.isTimerPaused">Pause
+        </md-button>
+        <md-button class="md-fab md-accent" ng-click="ctrl.resumeTimer()"
+                   ng-if="ctrl.isCountingDown && ctrl.isTimerPaused">Resume
+        </md-button>
+    </section>
     <footer-bar></footer-bar>
 </div>

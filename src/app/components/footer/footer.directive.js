@@ -13,20 +13,29 @@ export function footerBarDirective() {
 }
 
 class FooterController {
-  constructor($state) {
+  constructor($state, $location) {
     'ngInject';
 
     this.$state = $state;
+    this.$location = $location;
+    this.activeStyle = {
+        color : 'yellow'
+    };
     this.items = [
-      {name: 'World clock', icon: 'clock', state: 'home'},
+      {name: 'Worldclock', icon: 'place', state: 'clock'},
       {name: 'Alarm', icon: 'alarm', state: 'alarm'},
-      {name: 'Bed time', icon: 'hotel', state: 'sleep'},
-      {name: 'Stop watch', icon: 'watch', state: 'watch'},
+      {name: 'Bedtime', icon: 'hotel', state: 'sleep'},
+      {name: 'Stopwatch', icon: 'watch', state: 'watch'},
       {name: 'Timer', icon: 'hourglass_full', state: 'timer'}
     ];
   }
 
   navigate(state) {
     this.$state.go(state);
+  }
+
+  isActive(state) {
+    let path = this.$location.url().split('/')[1] || 'clock';
+    return state === path;
   }
 }

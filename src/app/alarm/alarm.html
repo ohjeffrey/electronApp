@@ -1,15 +1,27 @@
 <div layout="column" flex layout-fill>
     <md-toolbar>
         <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
-            <md-button ng-click="vm.edit()">Edit</md-button>
+            <md-button ng-click="ctrl.edit()">Edit</md-button>
             <h2>Alarm Clock</h2>
-            <md-button ng-click="vm.add()">
+            <md-button ng-click="ctrl.add()">
                 <ng-md-icon icon="add" aria-label="add icon"></ng-md-icon>
             </md-button>
         </div>
     </md-toolbar>
-    <md-content layout-padding="5">
-        <h1>{{vmb.name}} content</h1>
+    <md-content>
+        <md-list>
+            <md-list-item class="md-3-line" ng-repeat="alarm in ctrl.alarms">
+                <div class="md-list-item-text">
+                    <h3 class="md-display-4">{{alarm.time}}</h3>
+                    <p>
+                        <span>{{alarm.name}}</span>,
+                        <span>{{alarm.repetition}}</span>
+                    </p>
+                </div>
+                <md-switch ng-model="alarm.enabled" aria-label="On and off button"></md-switch>
+                <md-divider ng-if="!$last"></md-divider>
+            </md-list-item>
+        </md-list>
     </md-content>
     <footer-bar></footer-bar>
 </div>

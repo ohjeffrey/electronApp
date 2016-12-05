@@ -40,6 +40,7 @@ export class TimerController {
         this.currentMinute = Math.floor(delay / 60) % 60;
         this.currentSecond = delay % 60;
 
+        //count down is done
         if (delay === 0) {
           let activeTone = new Audio(`assets/sounds/${this.tone}`);
           activeTone.loop = true;
@@ -49,7 +50,6 @@ export class TimerController {
           this.$mdDialog
             .show(this.$mdDialog
               .alert()
-              .parent(angular.element(document.querySelector('.timerPage')))
               .clickOutsideToClose(true)
               .textContent('Timer Done')
               .ariaLabel('Timer Done')

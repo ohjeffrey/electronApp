@@ -1,32 +1,32 @@
 export function routerConfig($stateProvider, $urlRouterProvider) {
   'ngInject';
   $stateProvider
-    .state('home', {
-      url: '/home',
+    .state('clock', {
+      url: '/',
       templateUrl: 'app/clock/clock.html',
       controller: 'ClockController',
-      controllerAs: 'vma'
+      controllerAs: 'ctrl'
     })
     .state('alarm', {
       url: '/alarm',
       templateUrl: 'app/alarm/alarm.html',
       controller: 'AlarmController',
-      controllerAs: 'vmb'
+      controllerAs: 'ctrl'
     })
     .state('sleep', {
       url: '/sleep',
       templateUrl: 'app/sleep/sleep.html',
       controller: 'SleepController',
-      controllerAs: 'vmc'
+      controllerAs: 'ctrl'
     })
     .state('watch', {
       url: '/watch',
       templateUrl: 'app/watch/watch.html',
       controller: 'WatchController',
-      controllerAs: 'vmd'
+      controllerAs: 'ctrl'
     })
     .state('timer', {
-      url: '/',
+      url: '/timer',
       templateUrl: 'app/timer/timer.html',
       controller: 'TimerController',
       controllerAs: 'ctrl'
