@@ -98,7 +98,7 @@
     submenu: [{
       label: 'About ' + app_name,
       click: function () {
-        require('electron').shell.openExternal("https://github.com/scalajay/basic/releases/tag/" + app_version);
+        require('electron').shell.openExternal("https://github.com/scalajay/electronApp/releases/tag/v" + app_version);
       }
     }, {
       label: 'Version ' + app_version,
@@ -115,7 +115,7 @@
     }, {
       label: 'Changelog',
       click: function () {
-        require('electron').shell.openExternal("https://github.com/scalajay/basic/releases/tag/" + app_version);
+        require('electron').shell.openExternal("https://github.com/scalajay/electronApp/releases/tag/v" + app_version);
       }
     }]
   }];
@@ -173,7 +173,6 @@
       click: function (item, focusedWindow) {
         if (focusedWindow && focusedWindow.webContents.canGoBack()) {
           focusedWindow.webContents.goBack();
-          focusedWindow.webContents.reload();
         }
       }
     }, {
@@ -215,7 +214,7 @@
     submenu: [{
       label: 'About ' + app_name,
       click: function () {
-        require('electron').shell.openExternal("https://github.com/scalajay/basic/releases/tag/" + app_version);
+        require('electron').shell.openExternal("https://github.com/scalajay/electronApp/releases/tag/v" + app_version);
       }
     }, {
       label: 'Version ' + app_version,
@@ -232,7 +231,7 @@
     }, {
       label: 'Changelog',
       click: function () {
-        require('electron').shell.openExternal("https://github.com/scalajay/basic/releases/tag/" + app_version);
+        require('electron').shell.openExternal("https://github.com/scalajay/electronApp/releases/tag/v" + app_version);
       }
     }]
   }];
